@@ -64,30 +64,29 @@ $superheroes = [
       "name" => "Wanda Maximoff",
       "alias" => "Scarlett Witch",
       "biography" => "Notably powerful, Wanda Maximoff has fought both against and with the Avengers, attempting to hone her abilities and do what she believes is right to help the world.",
-  ], 
+  ],
 ];
 
 ?>
 
-<?php
-
-$search = htmlspecialchars($_GET['searchInput']); //sanitize input received
-$hero = false;  
+<?php 
+    $search = htmlspecialchars($_GET['searchInput']); //sanitize input received
+    $hero = false;
 
 foreach ($superheroes as $superhero) {
     if ($superhero["alias"] == $search || $superhero["name"] == $search) {
         $hero = true;
-        <h3>$superhero["alias"];</h3>
-        <h4>A.K.A $superhero["name"];</h4>
-        <p>$superhero["biography"];</p>
+        echo "<h3>$superhero['alias'];</h3>";
+        echo "<h4>A.K.A $superhero['name'];</h4>";
+        echo "<p>$superhero['biography'];</p>";
     } elseif ($hero == false && !empty($search)) {
-        <h2 style="color: red;">SUPERHERO NOT FOUND</h2>
+        echo '<h2 style="color: red;">SUPERHERO NOT FOUND</h2>';
     } else {
-        <ul>
+        echo '<ul>';
             foreach ($superheroes as $superhero) {
-                <li> $superhero['alias']; </li>
-            } endforeach;
-        </ul>
-    } endif;
-} endforeach;
+                echo "<li> $superhero['alias']; </li>";
+            }
+        echo '</ul>';
+    }
+}
 ?>
