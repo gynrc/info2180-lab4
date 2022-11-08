@@ -69,24 +69,25 @@ $superheroes = [
 
 ?>
 
-<?php 
-    $search = htmlspecialchars($_GET['searchInput']); //sanitize input received
+<?php
+    $search = filter_input(INPUT_GET, 'searchInput', FILTER_SANITIZE_SPECIAL_CHARS); //sanitize input received
     $hero = false;
-
-foreach ($superheroes as $superhero) {
-    if ($superhero["alias"] == $search || $superhero["name"] == $search) {
-        $hero = true;
-        echo "<h3>$superhero['alias'];</h3>";
-        echo "<h4>A.K.A $superhero['name'];</h4>";
-        echo "<p>$superhero['biography'];</p>";
-    } elseif ($hero == false && !empty($search)) {
+    
+    if ($hero == false && !empty($search)) {
         echo '<h2 style="color: red;">SUPERHERO NOT FOUND</h2>';
-    } else {
-        echo '<ul>';
-            foreach ($superheroes as $superhero) {
-                echo "<li> $superhero['alias']; </li>";
+        foreach ($superheroes as $superhero) {
+            if ($superhero["alias"] == $search || $superhero["name"] == $search) {
+                $hero = true;
+                echo "<h3>{$superhero['alias']}</h3>";
+                echo "<h4>A.K.A {$superhero['name']}</h4>";
+                echo "<p>{$superhero['biography']}</p>";
             }
+        }
+    } elseif (empty($search)) {
+        echo '<ul>';
+                foreach ($superheroes as $superhero) {
+                    echo "<li>{$superhero['alias']}</li>";
+                }
         echo '</ul>';
     }
-}
 ?>

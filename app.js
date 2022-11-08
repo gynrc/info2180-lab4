@@ -4,6 +4,7 @@ window.onload = function () {
     let searchInput = searchField.value;
 
     searchBtn.addEventListener('click', e => {
+        e.preventDefault();
         fetch('http://localhost/info2180-lab4/superheroes.php?query='+searchInput)
             .then(response => response.text())
             .then(data => {
